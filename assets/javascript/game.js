@@ -48,14 +48,12 @@
   
   ];
 
+  let answerBank = [];
+  let ans;
+  let right = 0;
+  let wrong = 0;
 
-$("button").on("click", function(){
-  $("body").append("<div class='gameContainer'>");
-  gameTimer();
-})
-
-
-function gameTimer (){
+  function gameTimer (){
   let timeleft = 30;
   let timer = setInterval(function(){
   timeleft--;
@@ -64,13 +62,81 @@ function gameTimer (){
   if(timeleft <= 0)
       clearInterval(timer);
   },1000);
+};
 
+  function startGame(){
+  $("body").append("<div class='gameContainer'>");
+  
+  for(var i=0; i<questions.length; i++){
+    $(".gameContainer").append("<div class='questionStyle'>" + questions[i].question + "</div>");
+    
+      for(var j=0; j<questions[i].answers.length; j++){
+        $(".gameContainer").append('<div class="answerStyle"><input type="radio" value="' + questions[i].answers[j] + '" name="a' + i + '">' + questions[i].answers[j] + '</input></div>');}
+  };  
+};
 
+function eval(){
+
+answerBank.push($("input[name='a" + 0 + "']:checked").val());
+answerBank.push($("input[name='a" + 1 + "']:checked").val());
+answerBank.push($("input[name='a" + 2 + "']:checked").val());
+answerBank.push($("input[name='a" + 3 + "']:checked").val());
+answerBank.push($("input[name='a" + 4 + "']:checked").val());
+  
+if(answerBank[0] === questions[0].correct){
+  right++;
 }
+else if(answerBank[0] !== questions[0].correct){
+  wrong++;
+};
+
+if(answerBank[1] === questions[1].correct){
+  right++;
+}
+else if(answerBank[1] !== questions[1].correct){
+  wrong++;
+};
+
+if(answerBank[2] === questions[2].correct){
+  right++;
+}
+else if(answerBank[2] !== questions[2].correct){
+  wrong++;
+};
+
+if(answerBank[3] === questions[3].correct){
+  right++;
+}
+else if(answerBank[3] !== questions[3].correct){
+  wrong++;
+};
+
+if(answerBank[4] === questions[4].correct){
+  right++;
+}
+else if(answerBank[4] !== questions[4].correct){
+  wrong++;
+};
 
 
 
+console.log(answerBank);
+console.log(right);
+console.log(wrong);
+};
 
+
+
+$(".js-startBtn").on("click", function(){
+
+  gameTimer();
+  startGame();
+
+});
+
+$(".js-submitBtn").on("click", function(){
+eval();
+});
 
 
 })
