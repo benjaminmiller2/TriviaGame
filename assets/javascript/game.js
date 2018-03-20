@@ -48,38 +48,25 @@
   
   ];
 
-let ans = [];
-let a1;
+
+$("button").on("click", function(){
+  $("body").append("<div class='gameContainer'>");
+  gameTimer();
+})
 
 
-  function start(){
-    setTimeout(timer, 1000 * 30);
-
-    for(var i=0; i<questions.length; i++){
-      $(".js-q").append("<div class='questionStyle'>" + questions[i].question + "</div>");
-      
-        for(var j=0; j<questions[i].answers.length; j++){
-          $(".js-q").append('<div class="answerStyle"><input type="radio" value="' + questions[i].answers[j] + '" name="a' + i + '">' + questions[i].answers[j] + '</input></div>');}
-    };  
-  };
-
-  function eval(){
-    for(var i=0; i<questions.length; i++){
-      for(var j=0; j<questions[i].answers.length; j++){
-  a1 = $("input[name='a" + i + "']:checked").val()};
-  ans.push(a1);
-  console.log(ans)
-  };};
-
-  function timer(){
-    eval();
-  };
+function gameTimer (){
+  let timeleft = 30;
+  let timer = setInterval(function(){
+  timeleft--;
+  $(".js-countDown").text(timeleft);
+  
+  if(timeleft <= 0)
+      clearInterval(timer);
+  },1000);
 
 
-  $(".js-startGame").on("click", start());
-  $(".js-submit").on("click", eval())
-
-
+}
 
 
 
