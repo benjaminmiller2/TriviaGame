@@ -65,14 +65,17 @@
 };
 
   function startGame(){
-  $("body").append("<div class='gameContainer'>");
-  
+  $(".gameBox").append("<div class='gameContainer'>");
+
   for(var i=0; i<questions.length; i++){
     $(".gameContainer").append("<div class='questionStyle'>" + questions[i].question + "</div>");
     
       for(var j=0; j<questions[i].answers.length; j++){
         $(".gameContainer").append('<div class="answerStyle"><input type="radio" value="' + questions[i].answers[j] + '" name="a' + i + '">' + questions[i].answers[j] + '</input></div>');}
-  };  
+  }; 
+  
+
+
 };
 
 function eval(){
@@ -136,6 +139,7 @@ $(".js-startBtn").on("click", function(){
 
 $(".js-submitBtn").on("click", function(){
 eval();
+$(".gameContainer").empty();
 });
 
 
