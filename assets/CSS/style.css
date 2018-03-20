@@ -1,1 +1,20 @@
-
+.gameContainer{
+  width: 50%;
+  height: 80%;
+  margin: auto;
+  border: 1px solid khaki;
+  padding: 3%;
+  background-color: beige;
+}
+.questionStyle{
+  border: .5px solid khaki;
+  background-color: yellow;
+  padding: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.answerStyle{
+  border: ;
+  background-color: khaki;
+  padding: 5px;
+}
