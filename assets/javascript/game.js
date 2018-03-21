@@ -1,5 +1,6 @@
   $(document).ready(function(){
-               
+
+//Created an array of objects containing my questions, answers options, and correct answers.
   let questions = [  
    {
     question: "What is your quest?",
@@ -48,22 +49,30 @@
   
   ];
 
+//Created several global variables
+
   let answerBank = [];
   let ans;
   let right = 0;
   let wrong = 0;
+  let timeleft;
 
+//Create a timer and display, counting down from 30 seconds.
   function gameTimer (){
-  let timeleft = 30;
+  timeleft = 30;
   let timer = setInterval(function(){
   timeleft--;
   $(".js-countDown").text(timeleft);
   
-  if(timeleft <= 0)
-      clearInterval(timer);
+  if(timeleft === 0){
+    clearInterval(timer);
+    gameOver();
+  }
   },1000);
+
 };
 
+//Function to begin the game. Needs to create divs that call and display the questions and answer options from the array above.
   function startGame(){
   $(".gameBox").append("<div class='gameContainer'>");
 
@@ -73,12 +82,12 @@
       for(var j=0; j<questions[i].answers.length; j++){
         $(".gameContainer").append('<div class="answerStyle"><input type="radio" value="' + questions[i].answers[j] + '" name="a' + i + '">' + questions[i].answers[j] + '</input></div>');}
   }; 
-  
-
-
 };
 
 function eval(){
+//This collects input data from the radio buttons and determins if it matches the correct answers.
+//For the life of me I couldn't make this work dynamically. Employing a loop, it always returned "undefined."
+//So, I simply hard coded it.
 
 answerBank.push($("input[name='a" + 0 + "']:checked").val());
 answerBank.push($("input[name='a" + 1 + "']:checked").val());
@@ -121,26 +130,54 @@ else if(answerBank[4] !== questions[4].correct){
   wrong++;
 };
 
-
-
-console.log(answerBank);
-console.log(right);
-console.log(wrong);
 };
 
+//Function to display player score, and game over message. Needs to create divs to display win/lose value, and an image.
+function gameOver(){
+timeleft=1;
+$(".gameContainer").empty();
+$(".gameContainer").append("<div class='questionStyle'>Thou answered " + right + 
+" questions rightly, and " + wrong + " questions wrongly.</div>").append("<br><div class='gifBox'><img class='js-gif'></img></div>");
+if(wrong > 0){
+  $(".js-gif").attr("src", "./assets/images/lose.gif");
+  $(".gameContainer").append("<br><div class='questionStyle'>I guess thou didn't make it.</div>");
+}
+else if(timeleft === 0){
+  $(".js-gif").attr("src", "./assets/images/lose.gif");
+  $(".gameContainer").append("<br><div class='questionStyle'>Thou didn't even finish. Shame.</div>");
+}
+else{
+  $(".js-gif").attr("src", "./assets/images/win.gif");
+  $(".gameContainer").append("<br><div class='questionStyle'>Well done, sir knight! Thou may canter on.</div>");
+};
+$(".gameContainer").append("<div class='buttonBox'><button class='js-resetBtn button'>Try again!</button></div>")
+};
 
+function reset(){
+$(".gameContainer").empty();
+gameTimer();
+startGame();
+console.log("blerg")
+};
 
+//Start button, initializing game display and timer.
 $(".js-startBtn").on("click", function(){
 
   gameTimer();
   startGame();
 
+
 });
 
+//Submit button, ending game and evaluating inputs
 $(".js-submitBtn").on("click", function(){
 eval();
-$(".gameContainer").empty();
+gameOver();
 });
 
+//Reset button, return game to its original state.
+$(".js-resetBtn").on("click", function(){
+reset();
+});
 
 })
